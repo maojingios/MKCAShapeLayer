@@ -12,22 +12,22 @@
 
      >  关于CAShapeLayer？
 		
-		1、CAShapeLayer继承自CALayer，可使用CALayer的所有属性
-		2、CAShapeLayer需要和贝塞尔曲线配合使用才有意义。
-		3、贝塞尔曲线可以为其提供形状，而单独使用CAShapeLayer意义不大。
-		4、使用CAShapeLayer与贝塞尔曲线可以实现不在view的DrawRect方法中画出一些想要的图形
+	1、CAShapeLayer继承自CALayer，可使用CALayer的所有属性
+	2、CAShapeLayer需要和贝塞尔曲线配合使用才有意义。
+	3、贝塞尔曲线可以为其提供形状，而单独使用CAShapeLayer意义不大。
+	4、使用CAShapeLayer与贝塞尔曲线可以实现不在view的DrawRect方法中画出一些想要的图形
 		
 	> 关于CAShapeLayer和DrawRect的比较？
 		
-		1、DrawRect：DrawRect属于CoreGraphic框架，占用CPU，消耗性能大
-		2、CAShapeLayer：CAShapeLayer属于CoreAnimation框架，通过GPU来渲染图形，节省性能。动画渲染直接提交给手机GPU。
+	1、DrawRect：DrawRect属于CoreGraphic框架，占用CPU，消耗性能大
+	2、CAShapeLayer：CAShapeLayer属于CoreAnimation框架，通过GPU来渲染图形，节省性能。动画渲染直接提交给手机GPU。
 		
 	> 贝塞尔曲线与CAShapeLayer的关系
 	
-		1	CAShapeLayer中shape代表形状的意思，所以需要形状才能生效
-		2	贝塞尔曲线可以创建基于矢量的路径
-		3	贝塞尔曲线给CAShapeLayer提供路径，CAShapeLayer在提供的路径中进行渲染。路径会闭环，所以绘制出了Shape
-		4	用于CAShapeLayer的贝塞尔曲线作为Path，其path是一个首尾相接的闭环的曲线，即使该贝塞尔曲线不是一个闭环的曲线
+	1、CAShapeLayer中shape代表形状的意思，所以需要形状才能生效
+	2、贝塞尔曲线可以创建基于矢量的路径
+	3、贝塞尔曲线给CAShapeLayer提供路径，CAShapeLayer在提供的路径中进行渲染。路径会闭环，所以绘制出了Shape
+	4、用于CAShapeLayer的贝塞尔曲线作为Path，其path是一个首尾相接的闭环的曲线，即使该贝塞尔曲线不是一个闭环的曲线
 		
 
 		
@@ -161,9 +161,13 @@
  ![](https://github.com/maojingios/MKCAShapeLayer/blob/master/circle.gif)
     
 > 2.对勾效果。详见：MKCheckButton类：
+
  ![](https://github.com/maojingios/MKCAShapeLayer/blob/master/对勾.gif)
+ 
 > 3.水波浪效果。详见：MKWave类：
+
   ![](https://github.com/maojingios/MKCAShapeLayer/blob/master/wave.gif)
+  
 ## 总结
 		
 #####  CAShapeLayer 和 UIBezierPath 配合使用可以完成非常惊艳的效果，这里只是简单应用。网上也是有很多牛人分享的效果，都是非常好的学习资源。另外，体会最深的感觉是：想做出富有创新的效果，数学基础和动效设计基础相当重要。（分享结束，欢迎拍砖哦！）
