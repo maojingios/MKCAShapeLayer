@@ -89,6 +89,19 @@
         y = kheight * sin(0.01 * (self.angularSpeed * x + self.waveOffset));
         CGPathAddLineToPoint(paths, NULL, x, y);
     }
+    
+    /*
+     定义:
+     正弦曲线可表示为y=Asin(ωx+φ)+k，定义为函数y=Asin(ωx+φ)+k在直角坐标系上的图象，其中sin为正弦符号，x是直角坐标系x轴上的数值，y是在同一直角坐标系上函数对应的y值，k、ω和φ是常数（k、ω、φ∈R且ω≠0）
+     
+     参数定义:
+     A——振幅，当物体作轨迹符合正弦曲线的直线往复运动时，其值为行程的1/2。
+     (ωx+φ)——相位，反映变量y所处的状态。
+     φ——初相，x=0时的相位；反映在坐标系上则为图像的左右移动。
+     k——偏距，反映在坐标系上则为图像的上移或下移。
+     ω——角速度， 控制正弦周期(单位角度内震动的次数)。
+     */
+    
     CGPathAddLineToPoint(paths, NULL, kwidth, kheight);
     CGPathAddLineToPoint(paths, NULL, 0, kheight);
     CGPathCloseSubpath(paths);
