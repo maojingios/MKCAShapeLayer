@@ -33,112 +33,119 @@
 		
 * Demo
 
-	> 这里总结了将UIBezierPath描述路径赋给CAShapeLayer的用法。详见工程BasicUseView。		
+> 这里总结了将UIBezierPath描述路径赋给CAShapeLayer的用法。详见工程BasicUseView。		
 	
-	
-		/*
-		 以某个点为中心画圆弧
-		 */
-		-(void)bezierPathWithArc;
+	/*
+	 以某个点为中心画圆弧
+	 */
+	-(void)bezierPathWithArc;
+
+	/*
+	 设置矩形某个角为圆角
+	 */
+	-(void)bezierPathWithRoundedRectByCornerRadi;
+
+	/*
+	 画带圆角的矩形
+	 */
+	-(void)bezierPathWithRoundedRectByAllCorner;
+
+	/*
+	 画矩形内切圆
+	 */
+	-(void)bezierPathWithOvalInRect;
+
+	/*
+	 矩形
+	 */
+	-(void)bezierPathWithRect;
+
+	/*
+	 画二元曲线，一般和moveToPoint配合使用
+	 */
+	-(void)QuadCurveWithControlPoint;
+
+	/*
+	 以三个点画一段曲线，一般和moveToPoint配合使用
+	 */
+	-(void)QuadCurveWithTwoControlPoints;	
 		
-		/*
-		 设置矩形某个角为圆角
-		 */
-		-(void)bezierPathWithRoundedRectByCornerRadi;
-		
-		/*
-		 画带圆角的矩形
-		 */
-		-(void)bezierPathWithRoundedRectByAllCorner;
-		
-		/*
-		 画矩形内切圆
-		 */
-		-(void)bezierPathWithOvalInRect;
-		
-		/*
-		 矩形
-		 */
-		-(void)bezierPathWithRect;
-		
-		/*
-		 画二元曲线，一般和moveToPoint配合使用
-		 */
-		-(void)QuadCurveWithControlPoint;
-		
-		/*
-		 以三个点画一段曲线，一般和moveToPoint配合使用
-		 */
-		-(void)QuadCurveWithTwoControlPoints;
 	
 * CADisplayLink
 
  > 简介
 	
-		 CADisplayLink是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。
-		 我们在应用中创建一个新的 CADisplayLink 对象，把它添加到一个runloop中，并给它提供一个 target 和selector 在屏幕刷新的时候调用。
+	CADisplayLink是一个能让我们以和屏幕刷新率相同的频率将内容画到屏幕上的定时器。
+	我们在应用中创建一个新的 CADisplayLink 对象，把它添加到一个runloop中，并给它提供一个 target 和selector 在屏幕刷新的时候调用。
 		
-	> 与NSTimer区别
+> 与NSTimer区别
 		
-		iOS设备的屏幕刷新频率是固定的，CADisplayLink在正常情况下会在每次刷新结束都被调用，精确度相当高。
-		NSTimer的精确度就显得低了点，比如NSTimer的触发时间到的时候，runloop如果在阻塞状态，触发时间就会推迟到下一个runloop周期。并且 NSTimer新增了tolerance属性，让用户可以设置可以容忍的触发的时间的延迟范围。
-		CADisplayLink使用场合相对专一，适合做UI的不停重绘，比如自定义动画引擎或者视频播放的渲染。NSTimer的使用范围要广泛的多，各种需要单次或者循环定时处理的任务都可以使用。
-		在UI相关的动画或者显示内容使用 CADisplayLink比起用NSTimer的好处就是我们不需要在格外关心屏幕的刷新频率了，因为它本身就是跟屏幕刷新同步的。
+	iOS设备的屏幕刷新频率是固定的，CADisplayLink在正常情况下会在每次刷新结束都被调用，精确度相当高。
+	NSTimer的精确度就显得低了点，比如NSTimer的触发时间到的时候，runloop如果在阻塞状态，触发时间就会推迟到下一个runloop周期。并且 NSTimer新增了tolerance属性，让用户可以设置可以容忍的触发的时间的延迟范围。
+	CADisplayLink使用场合相对专一，适合做UI的不停重绘，比如自定义动画引擎或者视频播放的渲染。NSTimer的使用范围要广泛的多，各种需要单次或者循环定时处理的任务都可以使用。
+	在UI相关的动画或者显示内容使用 CADisplayLink比起用NSTimer的好处就是我们不需要在格外关心屏幕的刷新频率了，因为它本身就是跟屏幕刷新同步的。
 		
 * Demo
-	> 	这里总结了CADisplayLink的用法。详见MKCADisplayLink单利类
-		
-		#import "MKCADisplayLink.h"
-		#import <QuartzCore/QuartzCore.h>
-		
-		@interface MKCADisplayLink ()
-		
-		@property CADisplayLink * disPlayLink;
-		
-		@end
-		
-		@implementation MKCADisplayLink
-		
-		static MKCADisplayLink * _manager;
-		
-		+(__kindof MKCADisplayLink *)manager{
-		
-		    static dispatch_once_t onceToken;
-		    dispatch_once(&onceToken, ^{
-		        _manager = [super allocWithZone:NULL];
-		    });
-		    return _manager;
-		}
-		+(instancetype)allocWithZone:(struct _NSZone *)zone{
-		    return [MKCADisplayLink manager];
-		}
-		-(id)copyWithZone:(struct _NSZone *)zone{
-		    return [MKCADisplayLink manager];
-		}
-		
-		-(void)mkDisPlayLinkPerform:(id)instance withSEL:(NSString *)selString{
-		    SEL selecter = NSSelectorFromString(selString);
-		
-		    CADisplayLink * disP = [CADisplayLink displayLinkWithTarget:instance selector:selecter];
-		    self.disPlayLink = disP;
-		    [self.disPlayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-		    [self.disPlayLink setPaused:YES];
-		
-		}
-		-(void)mkStart{
-		    [self.disPlayLink setPaused:NO];
-		}
-		
-		-(void)mkStop{
-		    [self.disPlayLink setPaused:YES];
-		}
-		
-		-(void)mkCancel{
-		    [self.disPlayLink invalidate];
-			 self.disPlayLink = nil;
-		}
-		
-		@end
+
+> 这里总结了CADisplayLink的用法。详见MKCADisplayLink单利类
+
+	#import "MKCADisplayLink.h"
+	#import <QuartzCore/QuartzCore.h>
+
+	@interface MKCADisplayLink ()
+
+	@property CADisplayLink * disPlayLink;
+
+	@end
+
+	@implementation MKCADisplayLink
+
+	static MKCADisplayLink * _manager;
+
+	+(__kindof MKCADisplayLink *)manager{
+
+	    static dispatch_once_t onceToken;
+	    dispatch_once(&onceToken, ^{
+		_manager = [super allocWithZone:NULL];
+	    });
+	    return _manager;
+	}
+	+(instancetype)allocWithZone:(struct _NSZone *)zone{
+	    return [MKCADisplayLink manager];
+	}
+	-(id)copyWithZone:(struct _NSZone *)zone{
+	    return [MKCADisplayLink manager];
+	}
+
+	-(void)mkDisPlayLinkPerform:(id)instance withSEL:(NSString *)selString{
+
+	    SEL selecter = NSSelectorFromString(selString);
+
+	    CADisplayLink * disP = [CADisplayLink displayLinkWithTarget:instance selector:selecter];
+	    self.disPlayLink = disP;
+	    [self.disPlayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+	    [self.disPlayLink setPaused:YES];
+
+	}
+
+	-(void)mkStart{
+
+	    [self.disPlayLink setPaused:NO];
+	}
+
+	-(void)mkStop{
+	    [self.disPlayLink setPaused:YES];
+	}
+
+	-(void)mkCancel{
+
+	    [self.disPlayLink invalidate];
+	    self.disPlayLink = nil;
+	}
+
+	@end
+
+	
 
 * 正弦曲线
 
