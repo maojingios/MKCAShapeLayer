@@ -10,19 +10,19 @@
 
 * 关于CAShapeLayer和UIBezierPath。
 
-     >  关于CAShapeLayer？
+>  关于CAShapeLayer？
 		
 	1、CAShapeLayer继承自CALayer，可使用CALayer的所有属性
 	2、CAShapeLayer需要和贝塞尔曲线配合使用才有意义。
 	3、贝塞尔曲线可以为其提供形状，而单独使用CAShapeLayer意义不大。
 	4、使用CAShapeLayer与贝塞尔曲线可以实现不在view的DrawRect方法中画出一些想要的图形
 		
-	> 关于CAShapeLayer和DrawRect的比较？
+> 关于CAShapeLayer和DrawRect的比较？
 		
 	1、DrawRect：DrawRect属于CoreGraphic框架，占用CPU，消耗性能大
 	2、CAShapeLayer：CAShapeLayer属于CoreAnimation框架，通过GPU来渲染图形，节省性能。动画渲染直接提交给手机GPU。
 		
-	> 贝塞尔曲线与CAShapeLayer的关系
+> 贝塞尔曲线与CAShapeLayer的关系
 	
 	1、CAShapeLayer中shape代表形状的意思，所以需要形状才能生效
 	2、贝塞尔曲线可以创建基于矢量的路径
